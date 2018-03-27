@@ -10,16 +10,14 @@ export class ToDoService{
     }
 
     addToDo(title:string){
-        console.log('calling todoservice with title:'+title)
-       return this.http.post<ToDo>('http://localhost:8080/todoservice/add?todo='+title,{});
+       return this.http.post<ToDo>('http://localhost:8080/todoservice/add',title);
     }
 
     remove(todoId){
-       return this.http.post('http://localhost:8080/todoservice/remove?todoId='+todoId,{});
+       return this.http.post('http://localhost:8080/todoservice/remove',todoId);
     }
 
     update(todo:ToDo){
-        console.log('updating todo :'+todo)
        return this.http.post('http://localhost:8080/todoservice/update',todo);
     }
 }

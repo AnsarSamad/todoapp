@@ -8,7 +8,6 @@ import {ToDoService} from  './service/todo.service'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
   newTodo:string="";
   todos = new Array<ToDo>();
   validToDo:boolean = true;
