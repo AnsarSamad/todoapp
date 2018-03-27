@@ -510,3 +510,9 @@ html .clear-completed:active {
 		bottom: 10px;
 	}
 }
+.error {
+    padding: 10px 15px;
+    color: #f86c6b;
+    font-size: 12px;
+    margin: 0;
+}

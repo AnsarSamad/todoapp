@@ -11,17 +11,26 @@ export class AppComponent {
   newTodo:string="";
   todos = new Array<ToDo>();
   validToDo:boolean = true;
+  todo_alreadyExist:boolean = false;
 
   constructor(private  todoService:ToDoService){
 
   }
 
   addTodo(){
+    this.validToDo = true;
+    this.todo_alreadyExist = false;
+
     if(this.newTodo.trim().length <= 0){
       this.validToDo  =  false;
       return;
     }
-    this.todoService.addToDo(this.newTodo)
+    if(this.isToDoExist()){
+      this.todo_alreadyExist = true;
+      return;
+    }
+
+    this.todoService.addToDo(this.newTodo.trim())
     .subscribe((result:ToDo)=>{
       this.newTodo = "";
       this.todos.push(result);
@@ -29,6 +38,8 @@ export class AppComponent {
   }
 
   toggleTodoComplete(todo:ToDo){
+    this.validToDo = true;
+    this.todo_alreadyExist = false;
     let index = this.todos.indexOf(todo,0);
     console.log('found todo in index:'+index);
     if(todo.complete){
@@ -48,6 +59,8 @@ export class AppComponent {
   } 
 
   removeTodo(todo:ToDo){
+    this.validToDo = true;
+    this.todo_alreadyExist = false;
     console.log('selected todo:'+JSON.stringify(todo))
     let index = this.todos.indexOf(todo,0);
     this.todoService.remove(todo.id)
@@ -56,5 +69,10 @@ export class AppComponent {
         this.todos.splice(index, 1);
       }
     })
+  }
+
+  isToDoExist(){
+    var selected = this.todos.filter(todo => todo.title.trim() == this.newTodo.trim())
+    return selected.length;
   }
 }

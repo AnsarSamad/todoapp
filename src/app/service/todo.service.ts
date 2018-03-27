@@ -5,19 +5,26 @@ import{ToDo} from  '../entity/ToDo';
 @Injectable()
 export class ToDoService{
 
-    constructor(public http:HttpClient){
-        console.log('todo app service get called');
+    serverUrl : string;
+    constructor(private http:HttpClient){
+        this.fetchConfig();
     }
 
+    fetchConfig(){
+        return this.http.get('./assets/config.json')
+        .subscribe((res)=>{
+            this.serverUrl =  res['server.url'];
+        });
+    }
     addToDo(title:string){
-       return this.http.post<ToDo>('http://localhost:8080/todoservice/add',title);
+       return this.http.post(this.serverUrl+'/add',title);
     }
 
     remove(todoId){
-       return this.http.post('http://localhost:8080/todoservice/remove',todoId);
+       return this.http.post(this.serverUrl+'/remove',todoId);
     }
 
     update(todo:ToDo){
-       return this.http.post('http://localhost:8080/todoservice/update',todo);
+       return this.http.post(this.serverUrl+'/update',todo);
     }
 }

@@ -4,8 +4,9 @@
         <h1>Todos</h1>
         <input autofocus="" class="new-todo" placeholder="What needs to be done?" name="newtodo" [(ngModel)]="newTodo" (keyup.enter)="addTodo()">
         </header>
-      <section class="main" *ngIf="todos.length > 0">
-        <p *ngIf="!validToDo" class="error">Invalid todo item Please check</p>
+      <section class="main" *ngIf="todos.length > 0 || !validToDo || todo_alreadyExist">
+        <p *ngIf="!validToDo" class="error">Invalid todo item. Please try again</p>
+        <p *ngIf="todo_alreadyExist" class="error">ToDo item already exist. Please try another</p>
         <ul class="todo-list">
           <li *ngFor="let todo of todos">
           <div class="view">
